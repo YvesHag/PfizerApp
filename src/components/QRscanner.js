@@ -14,6 +14,7 @@ class QRscanner extends Component {
       handleScan(result){
         if(result){
           this.setState({ result })
+          console.log(result)
         }
       }
       handleError(err){
@@ -22,8 +23,21 @@ class QRscanner extends Component {
       render(){
         const previewStyle = {
           height: 240,
-          width: 320,
+          width:320,
         }
+        const foundRoom = ()=>{
+          if (this.state.result =="No result"){
+            return(
+            <div>{this.state.result}</div>
+            )
+            
+          }else{
+            return(
+            <button >{this.state.result}</button>
+            )
+          }
+        }
+          
     
         return(
           <div>
@@ -32,9 +46,12 @@ class QRscanner extends Component {
               style={previewStyle}
               onError={this.handleError}
               onScan={this.handleScan}
-              />
-            <p>{this.state.result}</p>
-            
+            />
+            <p>.</p>
+            <p>.</p>
+            <p>.</p>
+            <p>.</p>
+            <button>{this.state.result}</button>
           </div>
         )
       }
