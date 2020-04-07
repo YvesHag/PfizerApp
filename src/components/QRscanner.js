@@ -34,6 +34,7 @@ class QRscanner extends Component {
               onScan={this.handleScan}
               />
             <p>{this.state.result}</p>
+            
           </div>
         )
       }
