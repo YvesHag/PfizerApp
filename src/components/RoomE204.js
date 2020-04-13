@@ -25,7 +25,7 @@ class RoomE204 extends Component {
         
         return (
           <div className="container">
-            <div className= "row text-white">
+            <div className= "row text-white" style={{ backgroundColor: 'rgb(0,99,117)', maxHeight: '120px' }}>
               <RoomHeader roomId={this.state.roomId}></RoomHeader>
             </div>
             <div className="row justify-content-center min-vh-100">

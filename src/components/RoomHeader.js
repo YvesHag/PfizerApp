@@ -52,7 +52,7 @@ class RoomStatusBar extends Component {
     <div className="col-12  RoomHeader ">
         <div className='row '> 
           <div className="col-3 m-auto" ><img src='assets/logoWhite.png' heigt="62" width="75" alt='Pfizer'></img></div>
-          <div className="h3 col-3 m-auto text-left">{this.state.time}</div>
+          {/* <div className="h3 col-3 m-auto text-left">{this.state.time}</div> */}
           <div className="h1 col-3 m-auto text-center">{this.props.roomId}</div>                   
           <div className="col-3 m-auto text-right"><Button className="text-center bg-light" outline onClick={this.toggleModal}><span className="fa fa-sign-in "></span> Login</Button>  </div>
         </div>
