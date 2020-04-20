@@ -1,9 +1,14 @@
-.RoomHeader{
+.chooseAppHeader{
    height: 20%;
-   min-width: 100%;
    margin-top:30px;
    margin-bottom: 30px;
-   
+
+}
+
+.RoomHeader{
+   height: 20%;
+   margin-top:30px;
+   margin-bottom: 30px;
 }
 
 .RoomBody{
@@ -20,6 +25,10 @@
      min-width: 100%;
      background-color: rgb(76,99,117);
 
+ }
+ .alarmListRow{
+   background-color: rgba(0,99,117, 0.095);
+   border-radius: 20;
  }
 
  .bg-dark-overlay{

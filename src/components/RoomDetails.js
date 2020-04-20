@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component } from 'react';
 import { Card, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap'
 import { Chart } from "react-google-charts"
-
 import RoomHeader from './RoomHeader'
+import AlarmLog from "./alarmLog"
 
 
 class RoomDetails extends Component {
@@ -18,32 +18,68 @@ class RoomDetails extends Component {
                 maxRange: 40,
                 status: "comfort",
                 statusColor: "",
-                measurements:"",
-                unit:'°C'
+                measurements: "",
+                unit: '°C',
+                graphOptions: "",
+                alarmLog:[]
             },
             roomHum: {
-                id: "5145-72TT98",
+                id: "5145-72MT98",
                 value: 46,
                 maxRange: 40,
                 status: "comfort",
                 statusColor: "",
-                measurements:"",
-                unit:'°C'
+                measurements: "",
+                unit: '%',
+                graphOptions: '', 
+                alarmLog:[]
             },
             roomPres: 53,
-            pressedItem:'',
-            roomOccupation: 4,
-            batchNumber: 2000,
-
+            selectedTile: "",
+            selectedTag:"",
+            comfortColor: 'rgb(118, 255, 3)',
+            pharmaColor: 'rgb(255 0, 3)'
         };
-    }
 
-    componentDidMount() {
-        this.tempStatusColor();
         
     }
 
-    getTempMeasurement =() =>{
+    
+
+
+    componentDidMount() {
+        this.getStatusColor();
+        this.getTempAlarmLogs()
+    }
+
+    getTempAlarmLogs(){
+        const alarmLog= [
+             {id:1, content:"Low alarm", time: "15:32:54"},
+             {id:2, content:"High alarm", time: "04:18:47"},
+             {id:3, content:"Low alarm", time: "20:39:29"}
+         ]
+         this.setState({
+             roomTemp: { ...this.state.roomTemp, alarmLog: alarmLog}
+         })
+     }
+
+     acceptAlarm= (id)=>{
+
+            if (this.state.selectedTile ==="tempTile"){
+            
+            const remainingAlarms = this.state.roomTemp.alarmLog.filter(alarm =>{
+                return alarm.id !== id
+            }) 
+        
+           this.setState({
+                roomTemp: { ...this.state.roomTemp, alarmLog:remainingAlarms},
+                selectedTag: {...this.state.roomTemp, alarmLog:remainingAlarms}
+            }) 
+            //console.log(this.state.selectedTag)
+     }
+    }
+
+    getTempMeasurement = () => {
         const tempMeasurements = [
             ['x', 'HighA', 'LowA', "AV"],
             [0, 25, 15, 18],
@@ -55,54 +91,155 @@ class RoomDetails extends Component {
             [6, 25, 15, 24],
             [7, 25, 15, 23],
         ]
-
         this.setState({
-            roomTemp : { ...this.state.roomTemp,measurements: tempMeasurements }
-        }, ()=>{
-           console.log(this.state.roomTemp)
+            roomTemp: { ...this.state.roomTemp, measurements: tempMeasurements },
+
+        }, () => {
+            const graphOptions = {
+                hAxis: {
+                    title: 'Time',
+                    baselineColor: '#fff',
+                    gridlines: {
+                        color: 'transparent'
+                    },
+                    minValue: 0,
+                },
+
+                vAxis: {
+                    title: "°C",
+                    baselineColor: '#fff',
+                    gridlines: {
+                        color: 'transparent'
+                    },
+                    minValue: 0,
+                    maxValue: 40
+                },
+                series: {
+                    0: { color: "#e7711b", lineWidth: 1, lineDashStyle: [5, 1, 3] },
+                    1: { color: "#e7711b", lineWidth: 1, lineDashStyle: [5, 1, 3] },
+                    2: { color: "blue", lineWidth: 1, curveType: 'function' },
+                },
+                legend: { position: 'bottom' },
+                backgroundColor: { fill: 'transparent' }
+            }
+
+            this.setState({
+                roomTemp: { ...this.state.roomTemp, graphOptions: graphOptions }
+            }, () => {
+                //console.log(this.state.roomTemp)
+            })
         })
-        return(tempMeasurements)
+        return (tempMeasurements)
     }
 
-     getHumMeasurement =() =>{
+    getHumMeasurement = () => {
         const humMeasurements = [
             ['x', 'HighA', 'LowA', "AV"],
-            [0, 65, 15, 18],
-            [1, 65, 15, 20],
-            [2, 65, 15, 35],
-            [3, 65, 15, 17.5],
-            [4, 65, 15, 14],
+            [0, 65, 15, 58],
+            [1, 65, 15, 40],
+            [2, 65, 15, 45],
+            [3, 65, 15, 62],
+            [4, 65, 15, 67],
             [5, 65, 15, 17],
-            [6, 65, 15, 24],
-            [7, 65, 15, 23],
+            [6, 65, 15, 30],
+            [7, 65, 15, 40],
         ]
 
         this.setState({
             roomHum: { ...this.state.roomHum, measurements: humMeasurements }
-        }, ()=>{
-           // console.log(this.state.roomHum.measurements)
+        }, () => {
+            const graphOptions = {
+                hAxis: {
+                    title: 'Time',
+                    baselineColor: '#fff',
+                    gridlines: {
+                        color: 'transparent'
+                    },
+                    minValue: 0,
+                },
+
+                vAxis: {
+                    title: "%",
+                    baselineColor: '#fff',
+                    gridlines: {
+                        color: 'transparent'
+                    },
+                    minValue: 0,
+                    maxValue: 100
+                },
+                series: {
+                    0: { color: "#e7711b", lineWidth: 1, lineDashStyle: [5, 1, 3] },
+                    1: { color: "#e7711b", lineWidth: 1, lineDashStyle: [5, 1, 3] },
+                    2: { color: "blue", lineWidth: 1, curveType: 'function' },
+                },
+                legend: { position: 'bottom' },
+                backgroundColor: { fill: 'transparent' }
+            }
+
+            this.setState({
+                //roomTemp : { ...this.state.roomTemp,measurements: tempMeasurements },
+                roomHum: { ...this.state.roomHum, graphOptions: graphOptions }
+            })
+
+            //console.log(this.state.roomTemp)
         })
-        return(humMeasurements) 
+        return (humMeasurements)
     }
 
-    tempStatusColor = () => {
+    getStatusColor = () => {
         if (this.state.roomTemp.status === "comfort") {
-            console.log(this.state.roomTemp.status)
             this.setState({
-                roomTemp: { ...this.state.roomTemp, statusColor: 'rgb(118, 255, 3)' }
+                roomTemp: { ...this.state.roomTemp, statusColor: this.state.comfortColor }
             }, () => {
                 this.getTempMeasurement()
-                console.log(this.state.roomTemp)
+
             })
-        } else {
+        }
+        if (this.state.roomTemp.status !== "comfort") {
             this.setState({
-                roomTemp: { ...this.state.roomTemp, statusColor: 'rgb(255 0, 3)' }
+                roomTemp: { ...this.state.roomTemp, statusColor: this.state.pharmaColor }
+            }, () => {
+                this.getTempMeasurement()
+
+            })
+        }
+        if (this.state.roomHum.status === "comfort") {
+            this.setState({
+                roomHum: { ...this.state.roomHum, statusColor: this.state.comfortColor }
+            }, () => {
+                this.getHumMeasurement()
+
+            })
+        }
+        if (this.state.roomHum.status !== "comfort") {
+            this.setState({
+                roomHum: { ...this.state.roomHum, statusColor: this.state.pharmaColor }
+            }, () => {
+                this.getHumMeasurement()
+
             })
         }
 
     }
 
+
+
+    selectToDisplayTile = (selectedTile, selectedTag) => {
+        this.setState({
+            selectedTile: selectedTile,
+            selectedTag:selectedTag
+        })
+        //console.log(selectedTag)
+    }
+
+
+
+
     render() {
+
+        //console.log("rendering")
+        //console.log(this.state.selectedTag)
+        
 
         const TempCard =
             <Card className="col-12 " style={{ backgroundColor: this.state.roomTemp.statusColor, width: "100", }}>
@@ -122,77 +259,69 @@ class RoomDetails extends Component {
                 </CardBody>
             </Card>
 
-        const Graph =
-            <div className="col-12">
-                <Chart width={'90%'}
-                    height={'80%'}
+        let Graph = ""
+        if (this.state.selectedTile === "tempTile") {
+            Graph = <div className="col-12">
+                <Chart width={'100%'}
+                    height={'100%'}
                     chartType="LineChart"
-                    loader={<div>Loading Chart</div>}
+                    loader={<div></div>}
                     data={this.state.roomTemp.measurements}
-                    options={{
-                        hAxis: {
-                            title: 'Time',
-                            baselineColor: '#fff',
-                            gridlines: {
-                                color: 'transparent'
-                            },
-                        },
-                        vAxis: {
-                            title: '°C',
-                            baselineColor: '#fff',
-                            gridlines: {
-                                color: 'transparent'
-                            },
-                            minValue: 0,
-                            maxValue: 40
-                        },
-                        series: {
-                            0: { color: "#e7711b", lineWidth: 1, lineDashStyle: [5, 1, 3] },
-                            1: { color: "#e7711b", lineWidth: 1, lineDashStyle: [5, 1, 3] },
-                            2: { color: "blue", lineWidth: 1, curveType: 'function' },
-                        },
-                        legend: { position: 'bottom' },
-                        backgroundColor: { fill: 'transparent' }
-                    }}
+                    options={this.state.roomTemp.graphOptions}
                     rootProps={{ 'data-testid': '2' }}>
                 </Chart>
             </div>
+        }
+        else if (this.state.selectedTile === "humTile") {
+            Graph = <div className="col-12">
+                <Chart width={'100%'}
+                    height={'100%'}
+                    chartType="LineChart"
+                    loader={<div></div>}
+                    data={this.state.roomHum.measurements}
+                    options={this.state.roomHum.graphOptions}
+                    rootProps={{ 'data-testid': '2' }}>
+                </Chart>
+            </div>
+        }
+        else{
+            Graph = <div className="h3 col-12 text-center">
+            <div> Please select a measurement</div>
+        </div>
+        
+        }
 
 
 
 
         return (
             <div className="container min-vh-100 ">
-                    <div className="row text-white" style={{ backgroundColor: 'rgb(0,99,117)', maxHeight: '120px' }}>
-                        <div className="col-12">
-                            <RoomHeader roomId={this.state.id} ></RoomHeader>
+                <div className="row text-white" style={{ maxHeight: '120px', backgroundColor: 'rgb(0,99,117)' }}>
+                    <div className="col-12">
+                        <RoomHeader roomId={this.state.roomId}></RoomHeader>
+                    </div>
+                </div>
+                <div className="row" style={{ marginTop: "20px", marginLeft: "10px" }} >
+                    <div className="col-3 " style={{}}>
+                        <div className="row justify-content-center" >
+                            <div className="" onClick={() => { this.selectToDisplayTile("tempTile",this.state.roomTemp ) }}>{TempCard}</div>
+                        </div>
+                        <div className="row justify-content-center" style={{ marginTop: "10px" }}>
+                            <div className="" onClick={() => { this.selectToDisplayTile("humTile", this.state.roomHum) }}>{HumCard}</div>
                         </div>
                     </div>
-                    <div className="row" style={{marginTop:"20px",marginLeft:"10px"}} >
-                            <div className="col-3 " style={{}}>
-                                <div className="row justify-content-center" >
-                                    <div className="">{TempCard}</div>
-                                </div>
-                                <div className="row justify-content-center" style={{marginTop:"10px"}}>
-                                    <div className="">{HumCard}</div>
-                                </div>
+                    <div className="col-8 bg-white-overlay " style={{ borderRadius: '10px', marginLeft: "20px" }}>
+                        <div className="row h3 justify-content-center text-dark"> {this.state.selectedTag.id}</div>
+                        <div className="row justify-content-center text-dark">
+                            <div className="col-12">
+                                {Graph}
                             </div>
-                            <div className="col-8 bg-white-overlay " style={{borderRadius: '10px',marginLeft:"20px"}}>
-                                <div className="row justify-content-center text-dark flex-grow-1"> {this.state.roomTemp.id}</div>
-                                <div className="row justify-content-center text-dark flex-grow-1">
-                                    <div className="col-12 offset-2">
-                                        {Graph}
-                                    </div>
-                                </div>
-                                <div className="col-12">
-                                    <div className="row justify-content-center text-dark flex-grow-1" style={{marginTop:"30px"}} >
-                                         Alarm List of {this.state.roomTemp.id}
-                                    </div>
-                                       
-                                </div>
-                            </div>
-                        
+                        </div>
+                        <div className="col-12 mt-3">
+                            <AlarmLog alarmLog ={this.state.selectedTag.alarmLog} acceptAlarm={this.acceptAlarm} tag={this.state.selectedTag}></AlarmLog>
+                        </div>
                     </div>
+                </div>
             </div>
         );
     }

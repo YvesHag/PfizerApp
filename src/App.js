@@ -8,9 +8,27 @@ import RoomE204 from "./components/RoomE204"
 import QrScanner from './components/QRscanner'
 import RoomDetails from './components/RoomDetails'
 
-function App() {
+const App = () => {
+
+
+/*   componentDidMount(){
+    
+    var globalRoot = document.getElementById("root"); 
+      globalRoot.addEventListener("click", function() {
+        // document.body.requestFullscreen(); // to go to full screen
+      });
+   
+      //for disabeling longpress or right click effects
+       document.oncontextmenu = function() {
+        //return false; 
+      }  
+    }   */
+
+
   return (
-    <BrowserRouter>
+
+
+  <BrowserRouter>
       <div className="App">
         <Header></Header>
         <Switch>
@@ -20,11 +38,12 @@ function App() {
           <Route path ='/RoomDetails' component = {()=><RoomDetails></RoomDetails>}></Route>
           <Redirect to = '/ChooseApp'></Redirect>
         </Switch>
-        
       </div>
-    </BrowserRouter>
+    </BrowserRouter> 
     
   );
+
+  
 }
 
 export default App;
