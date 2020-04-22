@@ -1,3 +1,10 @@
+
+ .container{
+   min-width: 100%;
+   background-color: rgb(76,99,117);
+
+}
+
 .chooseAppHeader{
    height: 20%;
    margin-top:30px;
@@ -13,19 +20,37 @@
 
 .RoomBody{
     border-radius: 10;
-    margin-top:70px;
+    margin-top:15px;
  }
 
-
- .roomDetailsBody{
-    
+ .VerticalCentering{
+   max-height: 80%;
+   margin-top: 45px;
+   margin-left: 0;
+   margin-right: 0;
+   position: absolute;
+   top: 50%;
+   overflow: auto;
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
  }
 
- .container{
-     min-width: 100%;
-     background-color: rgb(76,99,117);
+.Graph{
+   margin:0;
+   position: absolute;
+   top: 50%;
+   overflow: auto;
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
+}
 
+ .link {
+   color: #FFF;
  }
+ .link:hover {
+    color: rgb(2, 2, 15)
+ }
+
  .alarmListRow{
    background-color: rgba(0,99,117, 0.095);
    border-radius: 20;

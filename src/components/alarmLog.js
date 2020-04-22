@@ -13,12 +13,14 @@ class Alarms extends Component {
         }
         this.toggleModal = this.toggleModal.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        
         console.log(props)
     }
 
-    toggleModal() {
+    toggleModal(alarmId) {
         this.setState({
             isModalOpen: !this.state.isModalOpen,
+            alarmId:alarmId
         });
     }
 
@@ -40,8 +42,8 @@ class Alarms extends Component {
     render() {
 
         let showAlarmList = ""
-        if (this.props.alarmLog !== undefined) {
-            showAlarmList = this.props.alarmLog.length ? (
+        if (this.props.selectedTile.alarmLog !== undefined) {
+            showAlarmList = this.props.selectedTile.alarmLog.length ? (
                 <div className="col-12 mt-3">
                     <div className="row h4 justify-content-center text-dark flex-grow-1" style={{ marginTop: "30px" }} >
                         Alarm List
@@ -51,14 +53,14 @@ class Alarms extends Component {
         }
 
         let alarmList = ""
-        if (this.props.alarmLog !== undefined) {
-            alarmList = this.props.alarmLog.length ? (
-                this.props.alarmLog.map(alarm => {
+        if (this.props.selectedTile.alarmLog !== undefined) {
+            alarmList = this.props.selectedTile.alarmLog.length ? (
+                this.props.selectedTile.alarmLog.map((alarm, index)=> {
                     return (
                         <div className="row mt-1 alarmListRow" key={alarm.id}>
-                            <div className="col-1 " onClick={this.toggleModal}><i className="fa fa-check">{/* {sign} */}</i></div>
+                            <div className="col-1 " onClick={()=>this.toggleModal(alarm.id)}><i className="fa fa-check">{/* {sign} */}</i></div>
                             <div className="col-3 " style={{ backgroundColor: 'props.tag.statusColor' }}>{alarm.content}</div>
-                            <div className="col-4 text-center">{this.props.tag.id}</div>
+                            <div className="col-4 text-center">{this.props.selectedTile.id}</div>
                             <div className="col-2 ">{alarm.time}</div>
                         </div>
                     )
@@ -92,7 +94,7 @@ class Alarms extends Component {
                                 <Input type="password" id="password" name="password" defaultValue=""
                                     innerRef={(input) => this.password = input} />
                             </FormGroup>
-                            <Button  value="submit" color="primary">Confirm</Button>
+                            <Button type="submit" value="submit" color="primary" onClick={()=>this.props.acceptAlarm(this.state.alarmId)}>Confirm</Button>
                         </Form>
                     </ModalBody>
                 </Modal>
