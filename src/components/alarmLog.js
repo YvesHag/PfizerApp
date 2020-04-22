@@ -26,16 +26,12 @@ class Alarms extends Component {
 
     handleLogin(event) {
         this.toggleModal();
-
-
         console.log(event.target.password.value)
         event.preventDefault();
         event.target.reset()
         console.log(event.target.password.value)
         if (event.target.password.value==="jambo"){
-
         }
-
     }
 
 

@@ -15,8 +15,10 @@
     "react-long-press": "^0.1.6",
     "react-popper": "^2.1.0",
     "react-qr-reader": "^2.2.1",
+    "react-redux-form": "^1.16.14",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "reactjs-popup": "^1.5.0",
     "reactstrap": "^8.4.1"
   },
   "scripts": {

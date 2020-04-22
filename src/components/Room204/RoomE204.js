@@ -9,8 +9,9 @@ const RoomE204=()=> {
       
       roomId: "E204",
       roomName: "WSL6",
-      roomStatus: "In Production",
+      roomStatus: "In Process",
       batchNumber: 2000,
+      path: "/RoomDetails"
 })    
 
         
@@ -20,12 +21,13 @@ const RoomE204=()=> {
               <RoomHeader roomId={state.roomId}></RoomHeader>
             </div>
             <div className="row justify-content-center">
-              <div className="col-4  VerticalCentering" >
-                <Link  to="/RoomDetails" style={{ textDecoration: 'none', minHeight:'150px'}} >
+              <div className="col-6  VerticalCentering" >
+                <Link  style={{ textDecoration: 'none', minHeight:'150px'}} >
                   <VuTile className ="row" 
                             roomId= {state.roomId}
                             roomName= {state.roomName} 
                             roomStatus={state.roomStatus} 
+                            path = {state.path}
                   ></VuTile>
                 </Link>
               </div>

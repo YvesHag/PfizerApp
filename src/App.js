@@ -15,12 +15,12 @@ const App = () => {
   useEffect(() => { //the same like component did mount
     var globalRoot = document.getElementById("root"); 
       globalRoot.addEventListener("click", function() {
-         document.body.requestFullscreen(); // to go to full screen
+         //document.body.requestFullscreen(); // to go to full screen
       });
    
       //for disabeling longpress or right click effects
        document.oncontextmenu = function() {
-        return false; 
+        //return false; 
       }  
   })
 
