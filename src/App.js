@@ -9,6 +9,8 @@ import QrScanner from './components/QRscanner'
 import RoomDetails from './components/Room204/RoomE204Details'
 import LaboChemie from "./components/LabChem/LabChem"
 import G039Details from './components/LabChem/G039/G039Details'
+import SyringeU036 from './components/SyringeU036/SyringeU036'
+import G032Details  from './components/SyringeU036/U032/U032Details'
 
 const App = () => {
 
@@ -39,6 +41,8 @@ const App = () => {
           <Route path ='/RoomDetails' component = {()=><RoomDetails></RoomDetails>}></Route>
           <Route path ='/LaboChemie' component = {()=><LaboChemie></LaboChemie>}></Route>
           <Route path ='/G039Details' component = {()=><G039Details></G039Details>}></Route>
+          <Route path ='/SyringeU036' component = {()=><SyringeU036></SyringeU036>}></Route>
+          <Route path ='/G032Details' component = {()=><G032Details></G032Details>}></Route>
           <Redirect to = '/ChooseApp'></Redirect>
         </Switch>
       </div>
